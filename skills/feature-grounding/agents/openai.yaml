@@ -1,0 +1,3 @@
+interface:
+  display_name: "Feature grounding"
+  short_description: "Assess whether and how a request fits the project"
