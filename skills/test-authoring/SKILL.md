@@ -21,11 +21,11 @@ Internal organisation, helper behaviour and intermediate representations remain 
 
 ## Choose the owning boundary
 
-Prefer deep integration tests at the module boundary responsible for a capability. Invoke it as a real caller would, exercise its internal components together, and inspect observable results.
+Prefer deep integration tests at the module boundary that expresses the design agreed with the user. Invoke it as a real caller would, exercise its internal components together, and inspect observable results.
 
 A boundary is defined by the capability and its consumers, not by a file, class or exported function. Exporting a helper does not make it worth testing separately.
 
-Do not add isolated unit tests for private helpers, internal collaborators or individual implementation branches. A focused test belongs only where the small interface itself represents an agreed capability.
+Focused tests should preserve behaviour agreed at that level, rather than lock in agent-chosen helpers, collaborators or branches.
 
 Avoid duplicating the same guarantee across layers. Additional coverage must address a distinct failure that the owning test cannot detect.
 
@@ -71,11 +71,9 @@ Round trips and agreement between implementations prove only the relationship be
 
 ## Evolve coverage with capabilities
 
-New features extend the owning integration scenarios. Add a new test when a distinct capability requires its own scenario.
+Prefer extending coherent owning scenarios for new features; add separate scenarios where they give clearer coverage.
 
-Bug fixes strengthen existing capability coverage through better inputs, lifecycle variants or assertions. Do not automatically create a standalone regression test or defect-specific test file.
-
-A missing owning scenario is a coverage design gap. Repair coverage around the capability rather than accumulating tests around individual defects.
+For bug fixes, address any meaningful coverage gap with a proportionate change to capability coverage, rather than automatically adding a regression test or defect-specific file.
 
 Behaviour-preserving refactors should preserve contractual expectations. Do not weaken assertions or rewrite expected results merely to accommodate a changed implementation.
 
@@ -89,24 +87,10 @@ Keep setup, fixtures and helpers proportionate to the capability. Do not add pro
 
 Repeated exceptions, extensive mocking and complicated setup are reasons to reconsider the design or chosen boundary before adding more test machinery.
 
-Compare added, removed and net lines separately for handwritten production code and tests, including test support and handwritten fixtures. Exclude generated outputs.
-
-Positive test growth exceeding positive production growth requires a design check: investigate duplicated coverage, unnecessary setup, misplaced boundaries and avoidable complexity. Explain any remaining disproportionate growth.
-
-Do not pad production code, obscure tests or delete unrelated coverage to satisfy the comparison.
+For substantial changes, sanity-check handwritten test additions, including support and fixtures, against production additions. A much larger test change warrants checking duplication, unnecessary setup and misplaced boundaries; the ratio is a rough signal, not a cap or target.
 
 Where input diversity creates a substantial example matrix, consider a compact property test: one that checks an agreed invariant across generated inputs. The invariant must have independent justification.
 
 Coverage percentages and test counts are diagnostic information, not authoring targets.
 
-## Judge retained value
-
-For each new or substantially changed scenario, be able to explain:
-
-- Which realistic consumer scenario it represents.
-- Which agreed behaviour it protects.
-- Which credible defect would make it fail for the intended reason.
-- What it detects beyond existing coverage.
-- Why its maintained code is proportionate to that value.
-
-A useful test permits internal rewrites while rejecting violations of the contract. A test that merely preserves the current implementation has not earned its place.
+Each new or substantially changed scenario should fail for a credible violation of the agreed behaviour and add confidence beyond existing coverage.
