@@ -1,6 +1,6 @@
 ---
 name: test-authoring
-description: Guide the authoring, modification and review of committed automated tests during feature work, bug fixes and refactoring. Prefer deep integration coverage of agreed capabilities, with minimal maintained test code.
+description: Use when adding, changing or reviewing committed automated tests for features, bug fixes or refactoring.
 ---
 
 # Test authoring
@@ -35,7 +35,7 @@ Avoid duplicating the same guarantee across layers. Additional coverage must add
 
 Test situations a real consumer can plausibly encounter through the capability's interface. Normal usage, realistic lifecycle transitions, documented limits and credible operating failures deserve coverage when their outcomes matter to the caller.
 
-A scenario being representable does not make it worth testing. Do not chase arbitrary argument combinations, artificial internal states or hypothetical misuse solely because they are possible. Each scenario needs a plausible consumer, an agreed expectation and a meaningful consequence if it fails.
+Each scenario needs a plausible consumer, an agreed expectation and a meaningful consequence if it fails.
 
 When awkward combinations expose an ambiguous or unnecessarily permissive interface, reconsider the interface or data model instead of adding defensive code and tests to support behaviour nobody needs.
 
@@ -47,7 +47,7 @@ Prefer a small number of scenarios that take the capability through its lifecycl
 
 Assert meaningful results throughout. Completing a sequence without checking its effects is insufficient.
 
-Keep scenarios understandable and failures diagnosable. Use independent state for distinct variants; do not create one sprawling test whose later checks depend on unrelated earlier cases.
+Keep scenarios understandable and failures diagnosable. Use independent state for distinct variants.
 
 Choose inputs that expose consequential mistakes. Distinguishable records, values and resources are more useful than repeated placeholders.
 
@@ -75,7 +75,7 @@ Round trips and agreement between implementations prove only the relationship be
 
 Prefer extending coherent owning scenarios for new features; add separate scenarios where they give clearer coverage.
 
-For bug fixes, close the demonstrated coverage gap with the smallest meaningful change to the tests. Extend an existing scenario when it remains coherent; otherwise keep the new scenario independent.
+For bug fixes, close the demonstrated coverage gap with the smallest meaningful change to the tests. Updated coverage distinguishes the defect from the corrected behaviour. Extend an existing scenario when it remains coherent; otherwise keep the new scenario independent.
 
 Behaviour-preserving refactors should preserve contractual expectations. Do not weaken assertions or rewrite expected results merely to accommodate a changed implementation.
 
