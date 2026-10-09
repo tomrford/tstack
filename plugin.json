@@ -1,0 +1,10 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "tstack",
+  "version": "0.1.0",
+  "description": "Practical skills for testing and maintaining software projects.",
+  "author": {
+    "name": "Tom Ford"
+  },
+  "repository": "https://github.com/tomrford/tstack"
+}
