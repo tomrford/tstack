@@ -31,6 +31,8 @@ Exercise agent-chosen internal decomposition through the owning boundary. Give a
 
 Avoid duplicating the same guarantee across layers. Additional coverage must address a distinct failure that the owning test cannot detect.
 
+A behaviour-preserving refactor may require changes to test setup, but should preserve contractual assertions and expected results.
+
 ## Choose realistic scenarios
 
 Test situations a real consumer can plausibly encounter through the capability's interface. Normal usage, realistic lifecycle transitions, documented limits and credible operating failures deserve coverage when their outcomes matter to the caller.
@@ -59,6 +61,8 @@ Substitute external dependencies only where isolation, determinism or cost requi
 
 Expected results must come from an independent source: an agreed requirement, specification, worked example, known fixture or established reference result.
 
+Reject assertion-free coverage probes: executing code without checking meaningful effects does not establish correctness.
+
 Reject tautological tests: self-confirming assertions that compare a result with itself or derive the expected result using the same logic being tested. Also reject assertions that:
 
 - Verify only fixture setup.
@@ -81,7 +85,9 @@ Behaviour-preserving refactors should preserve contractual expectations. Do not 
 
 Intentional behaviour changes update the relevant expectations. When behaviour is removed or simplified, remove obsolete coverage and test support.
 
-Check for redundant scenarios and test support while changing a capability; remove them when the remaining coverage demonstrably protects the required behaviour.
+Before removing redundant coverage, inspect the candidate, its production owner and overlapping tests. Establish that the remaining coverage protects its required behaviour. Remove helpers, fixtures and production seams used solely by the deleted tests.
+
+Never delete, skip or weaken a failing test merely to make the suite pass. Investigate whether it exposes a product bug, an invalid expectation or an intentional contract change.
 
 ## Make test growth earn its place
 
