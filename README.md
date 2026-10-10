@@ -1,22 +1,17 @@
 # tstack
 
-A Codex plugin with skills and workflows for maintaining projects, inspired by pstack, Matt Pocock's skills and gstack.
+A plugin with skills and workflows for maintaining projects, inspired by pstack, Matt Pocock's skills and gstack.
 
-## Install in Codex
+## Install
 
-```sh
-codex plugin marketplace add tomrford/tstack --ref main
-codex plugin add tstack@tstack
-```
+Ask **@Plugin Creator** to import `tomrford/tstack` from GitHub as a private plugin in your account. Open the returned plugin link and select **Install/+**.
 
-Start a new chat to use the installed skills.
+Start a new chat and select **@tstack** to use the skills in ChatGPT or Codex in the desktop app.
 
 ## Update
 
-After changes are pushed to `main`, refresh the installed copy:
+GitHub is the source of truth. The account plugin contains a snapshot of `main`.
 
-```sh
-codex plugin marketplace upgrade tstack
-```
+After pushing changes to `main`, ask **@Plugin Creator** to “sync tstack from GitHub at tomrford/tstack”, updating the existing plugin.
 
-Start a new chat after updating. Updates track `main`.
+Start a new chat after updating to load the latest skills.
