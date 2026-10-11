@@ -1,17 +1,9 @@
 # tstack
 
-A plugin with skills and workflows for maintaining projects, inspired by pstack, Matt Pocock's skills and gstack.
+Tom's adaptation of [PStack](https://github.com/cursor/plugins/tree/main/pstack) for Codex. The upstream project explains the engineering approach; this repository adapts its workflows and tools to how I work.
 
-## Install
+Mention `@tstack` with the outcome and evidence you want. The [workflow skill](./skills/workflow/SKILL.md) is the entry point, with bundled [model defaults](./skills/workflow/references/model-defaults.md) and [Codex agent tooling](./skills/workflow/references/codex-agent-tools.md).
 
-Ask **@Plugin Creator** to import `tomrford/tstack` from GitHub as a private plugin in your account. Open the returned plugin link and select **Install/+**.
+Based on PStack by Lauren Tan at [`11713c6`](https://github.com/cursor/plugins/tree/11713c683fe4add4fd403ea880580abbc9e0875f/pstack). Also includes `deslop`, `control-ui`, and `control-cli` from [Cursor's team kit at the same revision](https://github.com/cursor/plugins/tree/11713c683fe4add4fd403ea880580abbc9e0875f/cursor-team-kit).
 
-Start a new chat and select **@tstack** to use the skills in ChatGPT or Codex in the desktop app.
-
-## Update
-
-GitHub is the source of truth. The account plugin contains a snapshot of `main`.
-
-After pushing changes to `main`, ask **@Plugin Creator** to “sync tstack from GitHub at tomrford/tstack”, updating the existing plugin.
-
-Start a new chat after updating to load the latest skills.
+MIT. See [the project licence](./LICENSE) and [Cursor's team kit licence](./provenance/cursor-team-kit/LICENSE).
