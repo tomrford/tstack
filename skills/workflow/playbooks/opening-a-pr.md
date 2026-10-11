@@ -2,9 +2,9 @@
 
 Invoked at the end of every other playbook.
 
-**Worktree.** Assign each writer its own worktree through the Codex worktree tools. Pass its returned path in the brief; subagents share this workspace and do not receive isolation automatically. Preserve unrelated edits. Do not hard-reset or clean a checkout to switch tasks.
+**Worktree.** Assign each writer its own worktree through the Codex worktree tools. Pass its returned path in the brief; subagents share this workspace and do not receive isolation automatically. Multiple tasks on the same branch each get their own worktree, or `git fetch && git reset --hard origin/<branch>` between them. Dirty branch with unrelated work: patch out, fresh worktree, apply. Snarled worktree: reset from main, redo minimally.
 
-**Commits.** Follow the user's commit and delivery instructions. Use scoped commit messages. Do not amend unless asked. Keep changes as small ordered units whose evidence is reviewable.
+**Commits.** Follow the user's commit and delivery instructions. Use scoped commit messages. Amend when the fix belongs in a just-made commit. New commit when separable. Keep changes as small ordered units whose evidence is reviewable.
 
 **PRs.** Run the bundled `$deslop` skill over the diff before commit and `$no-comments` before review. Write every PR title, description, and commit body with `$technical-writing` (every layer except Diátaxis, and apply the STE vocabulary rules: one word per action, keep articles, a plain verb over `-ing` where one works), then apply `$unslop`.
 

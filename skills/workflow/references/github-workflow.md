@@ -22,6 +22,6 @@ Codex review supplements independent local review and behavioural verification. 
 
 ## Merge
 
-Merge only with the user's authorisation and all required evidence current. Prefer squash and pass the verified head SHA as `expected_head_sha` when the connector supports it. A rejected head check requires another status pass, not an unguarded retry.
+Merge only with the user's authorisation and all required evidence current. Pass the verified head SHA as `expected_head_sha` when the connector supports it. A rejected head check requires another status pass, not an unguarded retry.
 
 The current merge tool merges immediately. Do not claim it armed auto-merge. If merge-when-ready is requested and no tool supports it, monitor until ready within the authorised run or report the missing capability. Confirm the merged SHA and post-merge CI through the plugin.

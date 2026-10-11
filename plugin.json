@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "tstack",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Practical skills for testing and maintaining software projects.",
   "author": {
     "name": "Tom Ford"
@@ -11,6 +11,8 @@
     "com.openai": {
       "interface": {
         "displayName": "tstack",
+        "logo": "./assets/logo.png",
+        "composerIcon": "./assets/logo.png",
         "shortDescription": "Test and maintain projects",
         "longDescription": "Practical skills for testing and maintaining software projects.",
         "developerName": "Tom Ford",
