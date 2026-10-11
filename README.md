@@ -233,15 +233,11 @@ twenty-four short skills, one principle each. `poteto-mode` indexes them inline 
 
 </details>
 
-## not shipped here
+## companion skills
 
-a few things `poteto-mode` references but doesn't bundle:
+This set bundles [`deslop`](./skills/deslop/SKILL.md), [`control-ui`](./skills/control-ui/SKILL.md), and [`control-cli`](./skills/control-cli/SKILL.md) unchanged from [Cursor's team kit at `11713c6`](https://github.com/cursor/plugins/tree/11713c683fe4add4fd403ea880580abbc9e0875f/cursor-team-kit). Their [MIT licence](./provenance/cursor-team-kit/LICENSE) is included.
 
-- `/deslop` and the `deslop` skill ship in the `cursor-team-kit` plugin.
-- `control-cli` (for CLIs and TUIs) and `control-ui` (for browser, Electron, web) ship in `cursor-team-kit` too.
-- `/create-skill` is a cursor built-in. cursor also ships a built-in `/babysit`; inside `poteto-mode`, the [babysit playbook](./skills/poteto-mode/playbooks/babysit.md) supersedes it for pr-status requests.
-
-install `cursor-team-kit` alongside pstack if you want the full set.
+`/create-skill` is a Cursor built-in. Cursor also ships a built-in `/babysit`; inside `poteto-mode`, the [babysit playbook](./skills/poteto-mode/playbooks/babysit.md) supersedes it for PR-status requests.
 
 ## why are there no planning skills?
 
@@ -256,12 +252,6 @@ type [`/automate-me`](./skills/automate-me/SKILL.md). it mines your recent trans
 models are configurable too. type [`/setup-pstack`](./skills/setup-pstack/SKILL.md). it detects the models you have access to and writes a small always-applied rule mapping each role (code, judgment, the review panels) to a model. every skill reads it and falls back to sensible defaults when the rule is absent, so you override only what you want.
 
 when a default changes, a rule written before the change still pins the old default. delete those role lines, or delete the file, then run `/setup-pstack` again. a rerun keeps any role whose model differs from the default.
-
-## automations
-
-pstack also ships a dormant [benny automation pack](./automations/benny/). benny triages slack issue reports, then reproduces and fixes confirmed bugs with real ui evidence. its files are not registered as slash skills.
-
-to set it up, point cursor at [`FOR_AGENTS.md`](./automations/benny/FOR_AGENTS.md). setup copies the pack into the target repository at `.cursor/automations/benny/`, enables pstack there for shared skills, and keeps user configuration outside the copied pack.
 
 ## license
 
