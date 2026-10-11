@@ -3,7 +3,7 @@
 ## What this source contains
 
 - Commit history (messages, dates, authors, diffs)
-- PR descriptions, review comments, and discussion threads (via `gh`)
+- PR descriptions, review comments, and discussion threads (through the GitHub Codex plugin)
 - Inline code comments, TODOs, FIXMEs, deprecation notes
 - ADRs (architectural decision records) if the repo keeps them
 - Tests, whose names and assertions often encode the edge cases that motivated a change
@@ -43,9 +43,9 @@ For each substantive commit, pull the PR context:
 # PR number from the merge commit or branch
 git log -1 --format=%B <hash>
 
-# Body, review comments, linked issues. In a PR with discussion, reviews and comments hold the real signal
-gh pr view <number> --json title,body,author,createdAt,mergedAt,labels,closingIssuesReferences,comments,reviews,files
 ```
+
+Read the PR body, linked issues, submitted reviews, comments, and changed files through the GitHub Codex plugin. Follow pagination.
 
 Look for out-of-band docs:
 

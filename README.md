@@ -235,7 +235,7 @@ twenty-four short skills, one principle each. `poteto-mode` indexes them inline 
 
 ## companion skills
 
-This set bundles [`deslop`](./skills/deslop/SKILL.md), [`control-ui`](./skills/control-ui/SKILL.md), and [`control-cli`](./skills/control-cli/SKILL.md) unchanged from [Cursor's team kit at `11713c6`](https://github.com/cursor/plugins/tree/11713c683fe4add4fd403ea880580abbc9e0875f/cursor-team-kit). Their [MIT licence](./provenance/cursor-team-kit/LICENSE) is included.
+This set bundles [`deslop`](./skills/deslop/SKILL.md), [`control-ui`](./skills/control-ui/SKILL.md), and [`control-cli`](./skills/control-cli/SKILL.md) from [Cursor's team kit at `11713c6`](https://github.com/cursor/plugins/tree/11713c683fe4add4fd403ea880580abbc9e0875f/cursor-team-kit). Their [MIT licence](./provenance/cursor-team-kit/LICENSE) is included.
 
 `/create-skill` is a Cursor built-in. Cursor also ships a built-in `/babysit`; inside `poteto-mode`, the [babysit playbook](./skills/poteto-mode/playbooks/babysit.md) supersedes it for PR-status requests.
 

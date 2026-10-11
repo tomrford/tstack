@@ -1,14 +1,11 @@
 import { afterEach, describe, expect, it } from "bun:test";
 import {
-  chmod,
-  mkdir,
   mkdtemp,
   readFile,
   readdir,
   rm,
   writeFile,
 } from "node:fs/promises";
-import { realpathSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
@@ -53,110 +50,6 @@ async function initializedStore(): Promise<{
   const store = useStore(directory);
   await store.init();
   return { directory, store };
-}
-
-function git({
-  args,
-  repo,
-}: {
-  args: readonly string[];
-  repo: string;
-}): string {
-  const result = Bun.spawnSync(["git", "-C", repo, ...args]);
-  if (result.exitCode !== 0) {
-    throw new Error(
-      `git ${args.join(" ")} failed: ${result.stderr.toString()}`
-    );
-  }
-  return result.stdout.toString().trim();
-}
-
-async function makeGitStack(directory: string): Promise<{
-  readonly repo: string;
-  readonly mergedSha: string;
-  readonly closedSha: string;
-  readonly openSha: string;
-}> {
-  const repo = join(directory, "repo");
-  await mkdir(repo);
-  git({ repo, args: ["init", "--initial-branch=main"] });
-  git({ repo, args: ["config", "user.name", "Orch Test"] });
-  git({ repo, args: ["config", "user.email", "orch@example.com"] });
-  await writeFile(join(repo, "main.txt"), "main\n");
-  git({ repo, args: ["add", "."] });
-  git({ repo, args: ["commit", "-m", "main"] });
-
-  const branches = ["stack/merged", "stack/closed", "stack/open"];
-  for (const [index, branch] of branches.entries()) {
-    git({ repo, args: ["checkout", "-b", branch] });
-    await writeFile(join(repo, `stack-${index}.txt`), `${branch}\n`);
-    git({ repo, args: ["add", "."] });
-    git({ repo, args: ["commit", "-m", branch] });
-  }
-
-  return {
-    repo,
-    mergedSha: git({ repo, args: ["rev-parse", "stack/merged"] }),
-    closedSha: git({ repo, args: ["rev-parse", "stack/closed"] }),
-    openSha: git({ repo, args: ["rev-parse", "stack/open"] }),
-  };
-}
-
-async function withFakeGt<T>({
-  directory,
-  operation,
-  output,
-}: {
-  directory: string;
-  operation: (outputPath: string) => Promise<T>;
-  output: string;
-}): Promise<T> {
-  const bin = join(directory, "bin");
-  const outputPath = join(directory, "gt-output.txt");
-  await mkdir(bin);
-  await writeFile(outputPath, output);
-  const gt = join(bin, "gt");
-  await writeFile(
-    gt,
-    `#!/usr/bin/env bash
-set -euo pipefail
-if [ "$(pwd -P)" != "${realpathSync(join(directory, "repo"))}" ]; then
-  printf 'gt ran outside the fixture repo: %s\\n' "$(pwd -P)" >&2
-  exit 2
-fi
-case "$*" in
-  "--no-interactive log short --stack --reverse")
-    cat "${outputPath}"
-    ;;
-  "--no-interactive info stack/merged")
-    printf 'stack/merged\\nPR #10 (Merged) merged change\\n'
-    ;;
-  "--no-interactive info stack/closed")
-    printf 'stack/closed\\nPR #13 (Closed) closed change\\n'
-    ;;
-  "--no-interactive info stack/open")
-    printf 'stack/open\\nPR #11 (Needs approvals) open change\\n'
-    ;;
-  *)
-    printf 'unexpected gt arguments: %s\\n' "$*" >&2
-    exit 2
-    ;;
-esac
-`
-  );
-  await chmod(gt, 0o755);
-
-  const originalPath = process.env.PATH;
-  process.env.PATH = `${bin}:${originalPath ?? ""}`;
-  try {
-    return await operation(outputPath);
-  } finally {
-    if (originalPath === undefined) {
-      delete process.env.PATH;
-    } else {
-      process.env.PATH = originalPath;
-    }
-  }
 }
 
 function runCli(
@@ -406,95 +299,6 @@ describe("Store", () => {
     ]);
   });
 
-  it("resolves the ordered Graphite frontier and validates an optional pin", async () => {
-    const { directory, store } = await initializedStore();
-    const stack = await makeGitStack(directory);
-    const output = `◯ main
-◯ stack/merged
-◯ stack/closed
-◉ stack/open (current)
-`;
-
-    await withFakeGt({
-      directory,
-      output,
-      operation: async () => {
-        expect(await store.frontier.set({ repo: stack.repo })).toEqual({
-          generation: 1,
-          prs: [
-            {
-              pr: 10,
-              branches: "stack/merged",
-              sha: stack.mergedSha,
-              state: "MERGED",
-            },
-            {
-              pr: 13,
-              branches: "stack/closed",
-              sha: stack.closedSha,
-              state: "CLOSED",
-            },
-            {
-              pr: 11,
-              branches: "stack/open",
-              sha: stack.openSha,
-              state: "OPEN",
-            },
-          ],
-          lowestUnmerged: 11,
-        });
-        expect(
-          (
-            await store.frontier.set({
-              repo: stack.repo,
-              prs: [10, 13, 11],
-            })
-          ).generation
-        ).toBe(2);
-        expect((await store.frontier.show()).generation).toBe(2);
-        await expect(
-          store.frontier.set({
-            repo: stack.repo,
-            prs: [10, 11, 12],
-          })
-        ).rejects.toThrow(
-          "frontier pin mismatch: missing from gt: 12; extra in gt: 13"
-        );
-        await expect(
-          store.frontier.set({
-            repo: stack.repo,
-            prs: [13, 10, 11],
-          })
-        ).rejects.toThrow(
-          "frontier pin mismatch: order differs: expected 13,10,11; gt 10,13,11"
-        );
-        await expect(
-          store.frontier.set({
-            repo: stack.repo,
-            prs: [10, 10],
-          })
-        ).rejects.toThrow("--prs must not contain duplicates");
-      },
-    });
-  });
-
-  it("rejects unparseable Graphite output loudly", async () => {
-    const { directory, store } = await initializedStore();
-    const stack = await makeGitStack(directory);
-
-    await withFakeGt({
-      directory,
-      output: "◯ main\nthis line is not Graphite output\n",
-      operation: async () => {
-        await expect(
-          store.frontier.set({ repo: stack.repo })
-        ).rejects.toThrow(
-          'gt log short output has an unparseable line 2: "this line is not Graphite output"'
-        );
-      },
-    });
-  });
-
   it("rejects malformed TSV, verdict, frontier, and inbox data", async () => {
     const { directory, store } = await initializedStore();
 
@@ -547,13 +351,42 @@ describe("orch CLI", () => {
 
     const frontierHelp = runCli(["frontier", "set", "--help"]);
     expect(frontierHelp.code).toBe(0);
-    expect(frontierHelp.stdout).toContain("--repo <dir>");
-    expect(frontierHelp.stdout).toContain("--prs <n,...>");
+    expect(frontierHelp.stdout).toContain("--file <path>");
 
     const directory = await makeDirectory();
     const invalid = runCli(["--store", directory, "unit", "add", "u1"]);
     expect(invalid.code).toBe(1);
     expect(invalid.stderr).toContain("required option '--track <track>'");
+  });
+
+  it("records connector snapshots, advances the frontier, and preserves it on invalid input", async () => {
+    const directory = await makeDirectory();
+    const file = join(directory, "snapshot.json");
+    const args = ["--store", directory];
+    expect(runCli([...args, "init"]).code).toBe(0);
+    const rows = [
+      { pr: 10, branches: "stack/base", sha: "a".repeat(40), state: "MERGED" },
+      { pr: 13, branches: "stack/closed", sha: "b".repeat(40), state: "CLOSED" },
+      { pr: 11, branches: "stack/tip", sha: "c".repeat(40), state: "OPEN" },
+    ];
+    await writeFile(file, JSON.stringify(rows));
+    const set = () => runCli([...args, "frontier", "set", "--file", file, "--json"]);
+    const first = set();
+    expect(first.code).toBe(0);
+    expect(JSON.parse(first.stdout)).toEqual({ generation: 1, prs: rows, lowestUnmerged: 11 });
+    expect(JSON.parse(runCli([...args, "frontier", "show", "--json"]).stdout)).toEqual({ generation: 1, prs: rows, lowestUnmerged: 11 });
+    const status = runCli([...args, "status", "--json"]);
+    expect(status.code).toBe(0);
+    expect(JSON.parse(status.stdout).frontier).toEqual({ generation: 1, prs: rows, lowestUnmerged: 11 });
+    const saved = await readFile(join(directory, "frontier.json"), "utf8");
+    for (const invalid of ["not JSON", JSON.stringify({ prs: rows }), JSON.stringify([rows[0], rows[0]]), JSON.stringify([{ ...rows[2], sha: "short" }]), JSON.stringify([{ ...rows[2], sha: "a".repeat(41) }]), JSON.stringify([{ ...rows[2], state: "unknown" }])]) {
+      await writeFile(file, invalid);
+      expect(set().code).toBe(1);
+      expect(await readFile(join(directory, "frontier.json"), "utf8")).toBe(saved);
+    }
+    await writeFile(file, "[]");
+    expect(JSON.parse(set().stdout)).toEqual({ generation: 2, prs: [], lowestUnmerged: null });
+    expect(JSON.parse(runCli([...args, "frontier", "show", "--json"]).stdout)).toEqual({ generation: 2, prs: [], lowestUnmerged: null });
   });
 
   it("accepts ORCH_STORE and emits complete JSON", async () => {
@@ -581,15 +414,15 @@ describe("orch CLI", () => {
     const directory = await makeDirectory();
     expect(runCli(["--store", directory, "init"]).code).toBe(0);
 
-    const missingRepo = runCli([
+    const missingFile = runCli([
       "--store",
       directory,
       "frontier",
       "set",
     ]);
-    expect(missingRepo.code).toBe(1);
-    expect(missingRepo.stderr).toContain(
-      "set --repo <dir> or ORCH_REPO"
+    expect(missingFile.code).toBe(1);
+    expect(missingFile.stderr).toContain(
+      "required option '--file <path>'"
     );
 
     const userError = runCli([

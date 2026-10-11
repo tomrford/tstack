@@ -1,5 +1,6 @@
 #!/usr/bin/env bun
 
+import { readFile } from "node:fs/promises";
 import { ensureDependenciesInstalled } from "../bootstrap.ts";
 import {
   NotFoundError,
@@ -80,8 +81,7 @@ interface GateResolveOptions {
 }
 
 interface FrontierSetOptions {
-  readonly repo?: string;
-  readonly prs?: readonly number[];
+  readonly file: string;
 }
 
 function message(error: unknown): string {
@@ -94,14 +94,6 @@ function positiveInteger(value: string): number {
     throw new InvalidArgumentError("must be a positive integer");
   }
   return parsed;
-}
-
-function prList(value: string): readonly number[] {
-  const parts = value.split(",");
-  if (parts.some((part) => part.length === 0)) {
-    throw new InvalidArgumentError("requires a comma-separated PR list");
-  }
-  return parts.map(positiveInteger);
 }
 
 function countLine(value: Counts): string {
@@ -204,14 +196,6 @@ function storeDirectory(program: Command): string {
   const value = program.opts<GlobalOptions>().store;
   if (value === undefined || value.trim().length === 0) {
     throw new UsageError("set --store <dir> or ORCH_STORE");
-  }
-  return value;
-}
-
-function frontierRepo(options: FrontierSetOptions): string {
-  const value = options.repo;
-  if (value === undefined || value.trim().length === 0) {
-    throw new UsageError("set --repo <dir> or ORCH_REPO");
   }
   return value;
 }
@@ -472,32 +456,19 @@ function createProgram(io: Io): Command {
 
   const frontier = program
     .command("frontier")
-    .description("manage the Graphite stack frontier")
+    .description("manage the recorded stack frontier")
     .action(() => requireSubcommand(program));
-  leaf(frontier, "set", "discover the Graphite stack and set the frontier")
-    .addOption(
-      new Option(
-        "--repo <dir>",
-        "repository directory (or ORCH_REPO)"
-      ).env("ORCH_REPO")
-    )
-    .option(
-      "--prs <n,...>",
-      "optional expected pull request order pin",
-      prList
-    )
-    .action((options: FrontierSetOptions) =>
-      runStore(
+  leaf(frontier, "set", "record an ordered PR snapshot supplied by the coordinator")
+    .requiredOption("--file <path>", "JSON array of PR records in bottom-to-top order")
+    .action(async (options: FrontierSetOptions) => {
+      const prs: unknown = JSON.parse(await readFile(options.file, "utf8"));
+      return runStore(
         program,
         io,
-        (store) =>
-          store.frontier.set({
-            repo: frontierRepo(options),
-            prs: options.prs,
-          }),
+        (store) => store.frontier.set({ prs }),
         frontierLine
-      )
-    );
+      );
+    });
   leaf(frontier, "show", "show the frontier").action(() =>
     runStore(program, io, (store) => store.frontier.show(), frontierLine)
   );

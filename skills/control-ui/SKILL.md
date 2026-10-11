@@ -1,11 +1,13 @@
 ---
 name: control-ui
-description: Build or adapt a local browser/CDP harness to drive and inspect a web, IDE, or Electron UI. Use for local UI verification, screenshots, accessibility snapshots, perf profiles, visual diffs, or reproducing UI bugs.
+description: Drive and inspect a web, IDE, or Electron UI, preferring the Codex app's built-in browser. Use for UI verification, screenshots, accessibility snapshots, perf profiles, visual diffs, or reproducing UI bugs.
 ---
 
 # Control UI
 
-Use local browser automation to verify UI behavior with evidence. First reuse the repo's own Playwright, browser, or Electron harness if it exists; otherwise assemble a temporary local harness around the app's dev server or Chromium debug port.
+Use the Codex app's built-in browser (`@Browser`) first to verify UI behaviour with evidence. Open the app's local URL there and follow the browser tool's documented controls. Use `@Chrome` when the built-in browser cannot reach the target or logged-in access is needed. Use `@Computer` for native apps or when browser controls cannot drive the interaction.
+
+Use a repository harness or CDP only for capabilities these tools cannot provide, such as a repeatable visual regression suite or a CPU profile. The presence of Playwright in a repo is not a reason to bypass the built-in browser.
 
 ## What It Is Used For
 
@@ -13,20 +15,20 @@ Use local browser automation to verify UI behavior with evidence. First reuse th
 - Verifying visual or accessibility changes with screenshots and snapshots.
 - Checking local web, IDE, or Electron behavior before shipping.
 - Capturing console logs, network logs, CPU profiles, traces, or heap snapshots.
-- Creating before/after evidence for `verify-this`.
+- Creating before-and-after evidence for the project's verification skill.
 
 ## Setup Pattern
 
 1. Start the app locally using the repo's documented dev command.
-2. Discover existing local harnesses: Playwright tests, Cypress specs, Storybook, browser scripts, Electron launch scripts, or snapshot tools.
-3. For a web app, connect to the local URL with the existing browser tooling.
-4. For Electron/Chromium, enable a remote debugging port when supported.
+2. Open a web app's local URL in `@Browser` and read the tool's initial state and instructions before interacting.
+3. If that tool cannot provide the required interaction or evidence, state the missing capability and choose `@Chrome`, `@Computer`, or an existing repository harness that can.
+4. For Electron/Chromium diagnostics that require CDP, enable a remote debugging port when supported.
 5. Select the correct page by stable app markers, not by tab order alone.
 6. Prefer accessibility roles, labels, and stable `data-*` selectors over coordinates.
 
 ## Generic Web Harness
 
-Use the repo's installed browser tooling when possible. If the repo already has Playwright, a minimal one-off probe looks like:
+Use this fallback when the built-in tools cannot provide the required proof and the repo already has Playwright. A minimal one-off probe looks like:
 
 ```javascript
 import { chromium } from "playwright";
