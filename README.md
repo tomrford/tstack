@@ -1,9 +1,20 @@
 # tstack
 
-Tom's adaptation of [PStack](https://github.com/cursor/plugins/tree/main/pstack) for Codex. The upstream project explains the engineering approach; this repository adapts its workflows and tools to how I work.
+Tom's personal skills for testing and maintaining software projects.
 
-Mention `@tstack` with the outcome and evidence you want. The [workflow skill](./skills/workflow/SKILL.md) is the entry point, with bundled [model defaults](./skills/workflow/references/model-defaults.md) and [Codex agent tooling](./skills/workflow/references/codex-agent-tools.md).
+- [test-authoring](./skills/test-authoring/SKILL.md): write meaningful tests through consumer interfaces.
+- [feature-grounding](./skills/feature-grounding/SKILL.md): assess whether a proposed change fits the project.
+- [ping-pong](./skills/ping-pong/SKILL.md): agree on a concrete target before implementation.
+- [lgtm](./skills/lgtm/SKILL.md): review, verify, and merge an accepted change.
+- [create-verification-skill](./skills/create-verification-skill/SKILL.md): build a project-specific verification skill and feature map.
+- [maintain-verification-skill](./skills/maintain-verification-skill/SKILL.md): keep that verification skill aligned with the real app.
 
-Based on PStack by Lauren Tan at [`11713c6`](https://github.com/cursor/plugins/tree/11713c683fe4add4fd403ea880580abbc9e0875f/pstack). Also includes `deslop`, `control-ui`, and `control-cli` from [Cursor's team kit at the same revision](https://github.com/cursor/plugins/tree/11713c683fe4add4fd403ea880580abbc9e0875f/cursor-team-kit).
+## Install and update
 
-MIT. See [the project licence](./LICENSE) and [Cursor's team kit licence](./provenance/cursor-team-kit/LICENSE).
+Ask **@Plugin Creator** to import `tomrford/tstack` from GitHub as a private plugin in your account. Open the returned plugin link and select **Install/+**.
+
+Start a new chat and select **@tstack** to use the skills. GitHub is the source of truth; the account plugin contains a snapshot of `main`.
+
+After pushing changes, ask **@Plugin Creator** to sync the existing tstack plugin from `tomrford/tstack`. Start a new chat after updating to load the latest skills.
+
+The verification skills come from Lauren Tan's PStack. See [provenance](./provenance/pstack/README.md) and its [MIT licence](./provenance/pstack/LICENSE). The personal skills use the [project MIT licence](./LICENSE).
