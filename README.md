@@ -6,6 +6,9 @@ Tom's personal skills for testing and maintaining software projects.
 - [feature-grounding](./skills/feature-grounding/SKILL.md): assess whether a proposed change fits the project.
 - [ping-pong](./skills/ping-pong/SKILL.md): agree on a concrete target before implementation.
 - [lgtm](./skills/lgtm/SKILL.md): review, verify, and merge an accepted change.
+- [how](./skills/how/SKILL.md): explain architecture, runtime flow, and ownership.
+- [why](./skills/why/SKILL.md): investigate design rationale and whether its constraints still apply.
+- [blast-radius](./skills/blast-radius/SKILL.md): assess consequences beyond the diff and substantiate safety assumptions.
 - [create-verification-skill](./skills/create-verification-skill/SKILL.md): build a project-specific verification skill and feature map.
 - [maintain-verification-skill](./skills/maintain-verification-skill/SKILL.md): keep that verification skill aligned with the real app.
 
@@ -17,4 +20,4 @@ Start a new chat and select **@tstack** to use the skills. GitHub is the source 
 
 After pushing changes, ask **@Plugin Creator** to sync the existing tstack plugin from `tomrford/tstack`. Start a new chat after updating to load the latest skills.
 
-The verification skills come from Lauren Tan's PStack. See [provenance](./provenance/pstack/README.md) and its [MIT licence](./provenance/pstack/LICENSE). The personal skills use the [project MIT licence](./LICENSE).
+The verification skills and condensed how, why, and blast-radius skills come from Lauren Tan's PStack. See [provenance](./provenance/pstack/README.md) and its [MIT licence](./provenance/pstack/LICENSE). The personal skills use the [project MIT licence](./LICENSE).
