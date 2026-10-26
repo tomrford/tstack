@@ -8,7 +8,7 @@ Imported on 10 October 2026 in commit `9fef6d15c69ff1269532b0c4704bf47b3b9eed32`
 - [maintain-verification-skill](../../skills/maintain-verification-skill/SKILL.md)
 - The creation skill's [references/feature-map-example/](../../skills/create-verification-skill/references/feature-map-example/) directory, including `README.md`, `create-note.md` and `search.md`.
 
-The adaptations replace `.cursor/skills/` with `.agents/skills/` and use Codex's `$skill-name` invocation syntax. Invocation policy overrides are omitted so automatic skill selection uses the default, replacing upstream's explicit-only invocation. The reference files are unchanged. These skills require no other pstack skills or principles. The reference commands describe an illustrative Notes app, not tools to install.
+The adaptations replace `.cursor/skills/` with `.agents/skills/` and refer to other skills by backticked name. Invocation policy overrides are omitted so automatic skill selection uses the default, replacing upstream's explicit-only invocation. The reference files are unchanged. These skills require no other pstack skills or principles. The reference commands describe an illustrative Notes app, not tools to install.
 
 ## Condensed investigation skills
 

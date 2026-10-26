@@ -1,0 +1,3 @@
+interface:
+  display_name: "Work summary"
+  short_description: "Brief a reader on a change or stretch of work"

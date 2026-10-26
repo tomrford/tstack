@@ -5,11 +5,11 @@ description: Take an agreed candidate from a pushed branch or draft PR through f
 
 # LGTM
 
-The user has seen the high-level result or agreed the intended change. Finish the review and verification loop, then merge when all criteria pass. Invoking this workflow authorises opening or updating the candidate's PR, requesting review, addressing findings and merging. An explicit instruction such as "$lgtm, take it to ready to merge" stops at readiness.
+The user has seen the high-level result or agreed the intended change. Finish the review and verification loop, then merge when all criteria pass. Invoking this workflow authorises opening or updating the candidate's PR, requesting review, addressing findings and merging. An explicit instruction such as "`lgtm`, take it to ready to merge" stops at readiness.
 
 ## Establish the candidate
 
-Read the agreed scope, repository instructions, current diff and existing verification evidence. Identify the PR's head and base, required checks and relevant project verification recipes. Open a PR from the pushed branch if needed and mark it ready for review.
+Read the agreed scope, repository instructions, current diff and existing verification evidence. Identify the PR's head and base, required checks and relevant project verification recipes. Open a PR from the pushed branch if needed and mark it ready for review. Write its title and body with the `pr-authoring` skill, and keep them current as the candidate changes.
 
 Use prior testing and verification where it still describes the candidate's contents and environment. This is the final confidence pass on an understood change; choose further scrutiny around its remaining risks.
 

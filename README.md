@@ -5,6 +5,8 @@ Tom's personal skills for testing and maintaining software projects.
 - [test-authoring](./skills/test-authoring/SKILL.md): write meaningful tests through consumer interfaces.
 - [feature-grounding](./skills/feature-grounding/SKILL.md): assess whether a proposed change fits the project.
 - [ping-pong](./skills/ping-pong/SKILL.md): agree on a concrete target before implementation.
+- [work-summary](./skills/work-summary/SKILL.md): brief a reader on a change or stretch of work.
+- [pr-authoring](./skills/pr-authoring/SKILL.md): write a PR title and description from a work summary.
 - [lgtm](./skills/lgtm/SKILL.md): review, verify, and merge an accepted change.
 - [how](./skills/how/SKILL.md): explain architecture, runtime flow, and ownership.
 - [why](./skills/why/SKILL.md): investigate design rationale and whether its constraints still apply.

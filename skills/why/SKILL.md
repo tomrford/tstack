@@ -1,6 +1,6 @@
 ---
 name: why
-description: 'Use for "why does X work this way", "why we picked Y", design rationale, regressions, postmortems, or data-backed thresholds. Investigates history and relevant connected evidence sources, then returns a cited read on decisions and tradeoffs. Use how for runtime behavior.'
+description: 'Use for "why does X work this way", "why we picked Y", design rationale, regressions, postmortems, or data-backed thresholds. Investigates history and relevant connected evidence sources, then returns a cited read on decisions and tradeoffs. Use `how` for runtime behavior.'
 ---
 
 # Why
