@@ -1,0 +1,3 @@
+interface:
+  display_name: "Blast radius"
+  short_description: "Find breakage beyond the diff and prove safety facts"
