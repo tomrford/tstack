@@ -1,0 +1,12 @@
+{
+  "name": "tstack",
+  "version": "0.1.12",
+  "description": "Practical skills for testing and maintaining software projects.",
+  "author": {
+    "name": "Tom Ford",
+    "url": "https://tomrford.com"
+  },
+  "homepage": "https://tomrford.com",
+  "repository": "https://github.com/tomrford/tstack",
+  "license": "MIT"
+}

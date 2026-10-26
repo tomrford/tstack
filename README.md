@@ -14,10 +14,25 @@ Tom's personal skills for testing and maintaining software projects.
 
 ## Install and update
 
+### Claude Code
+
+```
+/plugin marketplace add tomrford/tstack
+/plugin install tstack@tstack
+```
+
+Run `/plugin marketplace update tstack` to pick up pushed changes.
+
+### Codex
+
 Ask **@Plugin Creator** to import `tomrford/tstack` from GitHub as a private plugin in your account. Open the returned plugin link and select **Install/+**.
 
 Start a new chat and select **@tstack** to use the skills. GitHub is the source of truth; the account plugin contains a snapshot of `main`.
 
 After pushing changes, ask **@Plugin Creator** to sync the existing tstack plugin from `tomrford/tstack`. Start a new chat after updating to load the latest skills.
+
+### Releases
+
+Bump `version` in both [plugin.json](./plugin.json) and [.claude-plugin/plugin.json](./.claude-plugin/plugin.json) together.
 
 The verification skills and condensed how, why, and blast-radius skills come from Lauren Tan's PStack. See [provenance](./provenance/pstack/README.md) and its [MIT licence](./provenance/pstack/LICENSE). The personal skills use the [project MIT licence](./LICENSE).

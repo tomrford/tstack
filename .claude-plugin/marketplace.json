@@ -1,0 +1,13 @@
+{
+  "name": "tstack",
+  "owner": {
+    "name": "Tom Ford"
+  },
+  "plugins": [
+    {
+      "name": "tstack",
+      "source": "./",
+      "description": "Practical skills for testing and maintaining software projects."
+    }
+  ]
+}
