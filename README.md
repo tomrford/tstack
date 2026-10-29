@@ -9,6 +9,7 @@ Tom's personal skills for testing and maintaining software projects.
 - [work-summary](./skills/work-summary/SKILL.md): brief a reader on a change or stretch of work.
 - [pr-authoring](./skills/pr-authoring/SKILL.md): write a PR title and description from a work summary.
 - [lgtm](./skills/lgtm/SKILL.md): review, verify, and merge an accepted change.
+- [nightly-review](./skills/nightly-review/SKILL.md): review the day's merged changes and prepare focused fixes for review.
 - [how](./skills/how/SKILL.md): explain architecture, runtime flow, and ownership.
 - [why](./skills/why/SKILL.md): investigate design rationale and whether its constraints still apply.
 - [blast-radius](./skills/blast-radius/SKILL.md): assess consequences beyond the diff and substantiate safety assumptions.
