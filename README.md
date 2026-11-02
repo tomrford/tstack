@@ -6,10 +6,12 @@ Tom's personal skills for testing and maintaining software projects.
 - [feature-grounding](./skills/feature-grounding/SKILL.md): assess whether a proposed change fits the project.
 - [reality-check](./skills/reality-check/SKILL.md): assess practical risk and whether a proposed response is proportional.
 - [ping-pong](./skills/ping-pong/SKILL.md): agree on a concrete target before implementation.
+- [sloppy-copy](./skills/sloppy-copy/SKILL.md): remove redundant interface copy and let clear controls speak for themselves.
 - [work-summary](./skills/work-summary/SKILL.md): brief a reader on a change or stretch of work.
 - [pr-authoring](./skills/pr-authoring/SKILL.md): write a PR title and description from a work summary.
 - [lgtm](./skills/lgtm/SKILL.md): review, verify, and merge an accepted change.
 - [nightly-review](./skills/nightly-review/SKILL.md): review the day's merged changes and prepare focused fixes for review.
+- [heartbeat-scratchpad-loop](./skills/heartbeat-scratchpad-loop/SKILL.md): run long-lived tasks with a self-editing heartbeat and compact scratchpad.
 - [how](./skills/how/SKILL.md): explain architecture, runtime flow, and ownership.
 - [why](./skills/why/SKILL.md): investigate design rationale and whether its constraints still apply.
 - [blast-radius](./skills/blast-radius/SKILL.md): assess consequences beyond the diff and substantiate safety assumptions.

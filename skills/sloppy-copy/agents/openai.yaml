@@ -1,0 +1,3 @@
+interface:
+  display_name: "Sloppy copy"
+  short_description: "Remove redundant and over-explanatory interface copy"

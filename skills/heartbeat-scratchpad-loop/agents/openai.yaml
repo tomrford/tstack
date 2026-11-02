@@ -1,0 +1,3 @@
+interface:
+  display_name: "Heartbeat Scratchpad Loop"
+  short_description: "Run long-lived tasks with a self-editing heartbeat"
