@@ -1,0 +1,3 @@
+interface:
+  display_name: "Test rules"
+  short_description: "Decide, write and review meaningful test coverage"
