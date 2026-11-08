@@ -1,2 +1,6 @@
+interface:
+  display_name: "Nightly review"
+  short_description: "Review merged changes and prepare focused fixes"
+
 policy:
   allow_implicit_invocation: false
