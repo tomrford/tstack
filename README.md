@@ -3,6 +3,7 @@
 Tom's personal skills for testing and maintaining software projects.
 
 - [test-rules](./skills/test-rules/SKILL.md): decide, write and review meaningful test coverage.
+- [docs-rules](./skills/docs-rules/SKILL.md): keep repository docs independent of personal context and avoid documenting convention.
 - [feature-grounding](./skills/feature-grounding/SKILL.md): assess whether a proposed change fits the project.
 - [reality-check](./skills/reality-check/SKILL.md): assess practical risk and whether a proposed response is proportional.
 - [ping-pong](./skills/ping-pong/SKILL.md): agree on a concrete target before implementation.
